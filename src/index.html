@@ -1,32 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="styles.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus App</title>
-        <script type="module" src="/main.js" defer></script>
-    </head>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D模型交互展示平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+</head>
+<body>
+    <!-- 起始页 -->
+    <div id="start-page">
+        <div class="logo">
+            <h1>3D MODEL VIEWER</h1>
+            <p>交互式3D模型展示平台，支持模型上传、实时预览和全方位交互控制。让您的3D模型在网页上焕发生机！</p>
+        </div>
+        <div class="start-buttons">
+            <button class="btn btn-primary" onclick="showPage('main-page')">
+                <i class="fas fa-cube"></i> 开始探索
+            </button>
+            <button class="btn btn-secondary" onclick="showPage('settings-page')">
+                <i class="fas fa-cog"></i> 系统设置
+            </button>
+        </div>
+    </div>
 
-    <body>
-        <main class="container">
-            <h1>Welcome to PakePlus</h1>
-            <form class="row" id="greet-form">
-                <input id="inputValue" placeholder="Enter a something..." />
-            </form>
-            <div class="resultBox">
-                <span>result: </span>
-                <span id="result"></span>
+    <!-- 主功能区 -->
+    <div id="main-page">
+        <div id="model-container"></div>
+        <div class="controls">
+            <div class="control-btn" id="zoom-in">
+                <i class="fas fa-search-plus"></i>
             </div>
-            <div class="invokeBox">
-                <button id="openUrl">open_url_browser</button>
-                <button id="openUrlNew">open_url_new</button>
-                <button id="runCommand">run_command</button>
-                <button id="downloadFile">download_file</button>
-                <button id="getExeDir">get_exe_dir</button>
-                <button id="getEnvVar">get_env_var</button>
-                <button id="findPort">find_port</button>
+            <div class="control-btn" id="zoom-out">
+                <i class="fas fa-search-minus"></i>
             </div>
-        </main>
-    </body>
+            <div class="control-btn" id="rotate">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+            <div class="control-btn" id="reset">
+                <i class="fas fa-home"></i>
+            </div>
+        </div>
+        <div class="toolbar" id="toolbar">
+            <div class="toolbar-toggle" onclick="toggleToolbar()">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <h2>模型库</h2>
+            <div class="toolbar-content">
+                <div class="model-list" id="model-list">
+                    <!-- 动态生成模型项 -->
+                </div>
+                <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                        <h3>上传新模型</h3>
+                        <p>支持GLB、GLTF、OBJ格式文件，最大100MB</p>
+                        <button class="upload-btn">选择文件</button>
+                        <input type="file" id="file-input" accept=".glb,.gltf,.obj" style="display:none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置页面 -->
+    <div id="settings-page">
+        <button class="back-btn" onclick="showPage('start-page')">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="logo">
+            <h1>系统设置</h1>
+            <p>自定义您的3D查看体验，调整显示效果和控制参数</p>
+        </div>
+        <div class="settings-container">
+            <h2 class="settings-title">配置选项</h2>
+            <div class="settings-grid" id="settings-grid">
+                <!-- 动态生成设置项 -->
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
 </html>
