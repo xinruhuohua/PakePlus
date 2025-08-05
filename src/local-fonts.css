@@ -1,0 +1,139 @@
+/* 本地字体文件配置 - 解决打包后字体乱码问题 */
+
+/* 中文字体优先级配置 */
+@font-face {
+  font-family: 'Montserrat-Local';
+  src: local('Microsoft YaHei'), local('微软雅黑'), local('SimSun'), local('宋体');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Questrial-Local';
+  src: local('Microsoft YaHei'), local('微软雅黑'), local('SimHei'), local('黑体');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 字体回退策略 */
+body {
+  font-family: 
+    "Montserrat", 
+    "Montserrat-Local",
+    "Microsoft YaHei", 
+    "微软雅黑", 
+    "PingFang SC", 
+    "Hiragino Sans GB", 
+    "Heiti SC", 
+    "WenQuanYi Micro Hei", 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    Roboto, 
+    "Helvetica Neue", 
+    Arial, 
+    sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, [class^='heading-'] {
+  font-family: 
+    "Questrial", 
+    "Questrial-Local",
+    "Microsoft YaHei", 
+    "微软雅黑", 
+    "PingFang SC", 
+    "Hiragino Sans GB", 
+    "Heiti SC", 
+    "WenQuanYi Micro Hei", 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    Roboto, 
+    "Helvetica Neue", 
+    Arial, 
+    sans-serif !important;
+}
+
+/* 品牌文字特殊处理 */
+.brand span, .rd-navbar-brand span {
+  font-family: 
+    "Questrial", 
+    "Questrial-Local",
+    "Microsoft YaHei UI", 
+    "Microsoft YaHei", 
+    "微软雅黑", 
+    "PingFang SC", 
+    "Hiragino Sans GB", 
+    "Source Han Sans CN", 
+    "Noto Sans CJK SC", 
+    "WenQuanYi Micro Hei", 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    Roboto, 
+    "Helvetica Neue", 
+    Arial, 
+    sans-serif !important;
+}
+
+/* 确保中文字符正确显示 */
+.chinese-text, 
+.subtitle-classic, 
+.team-classic-name,
+.project-classic-title,
+.preloader-title {
+  font-family: 
+    "Microsoft YaHei UI", 
+    "Microsoft YaHei", 
+    "微软雅黑", 
+    "PingFang SC", 
+    "Hiragino Sans GB", 
+    "Source Han Sans CN", 
+    "Noto Sans CJK SC", 
+    "WenQuanYi Micro Hei", 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    Roboto, 
+    "Helvetica Neue", 
+    Arial, 
+    sans-serif !important;
+}
+
+/* 字体渲染优化 */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 确保字体加载失败时的回退 */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px !important;
+  }
+}
+
+/* 针对不同系统的字体优化 */
+/* Windows 系统 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body, h1, h2, h3, h4, h5, h6 {
+    font-family: "Microsoft YaHei", "微软雅黑", sans-serif !important;
+  }
+}
+
+/* macOS 系统 */
+@supports (-webkit-appearance: none) {
+  body, h1, h2, h3, h4, h5, h6 {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif !important;
+  }
+}
+
+/* Linux 系统 - 使用feature query */
+@supports (font-feature-settings: normal) {
+  body, h1, h2, h3, h4, h5, h6 {
+    font-family: "WenQuanYi Micro Hei", "Microsoft YaHei", sans-serif !important;
+  }
+}
