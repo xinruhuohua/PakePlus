@@ -1,0 +1,135 @@
+/* EXE环境字体优化 - 确保在打包环境中正确显示中文和英文 */
+
+/* 为exe环境优化的字体堆栈 - 完全依靠系统字体 */
+
+/* 重置所有字体为系统安全字体 */
+* {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* 身体文本 - 优先中文字体 */
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体", Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  font-weight: normal !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* 标题字体 - 确保中文显示正确 */
+h1, h2, h3, h4, h5, h6, 
+.heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6,
+.subtitle-classic,
+.contacts-classic-title,
+.box-comment-time,
+.box-comment-reply,
+.link-tag {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimHei", "黑体", "SimSun", "宋体", Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+
+/* 表单元素 */
+.form-input,
+.form-label,
+input, textarea, select {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体", Arial, sans-serif !important;
+}
+
+/* 按钮 */
+.button,
+.btn-primary,
+button {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体", Arial, sans-serif !important;
+}
+
+/* 导航菜单 */
+.rd-navbar-nav,
+.nav-custom {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体", Arial, sans-serif !important;
+}
+
+/* 特殊样式 - 品牌文字 */
+.brand,
+.preloader-title {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimHei", "黑体", Arial, sans-serif !important;
+  font-weight: bold !important;
+}
+
+/* 确保中文字符正确显示 */
+.chinese-text,
+[lang="zh"],
+[lang="zh-CN"] {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimSun", "宋体" !important;
+}
+
+/* 英文文本优化 */
+.english-text,
+[lang="en"] {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* 数字和特殊字符 */
+.numbers,
+.special-chars {
+  font-family: "Consolas", "Monaco", "Courier New", monospace !important;
+}
+
+/* 文本大小适配 */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 13px !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3 !important;
+  }
+}
+
+/* 确保在不同DPI下字体清晰 */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  * {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+}
+
+/* 移除可能导致问题的字体声明 */
+@font-face {
+  font-family: 'Montserrat-Optimized';
+  src: local('Microsoft YaHei'), local('微软雅黑');
+}
+
+@font-face {
+  font-family: 'Questrial-Optimized';
+  src: local('Microsoft YaHei'), local('微软雅黑');
+}
+
+/* 字体加载状态管理 */
+.fonts-loaded {
+  visibility: visible !important;
+}
+
+.font-loading {
+  visibility: visible !important;
+}
+
+/* 防止字体闪烁 */
+html {
+  font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", Arial, sans-serif !important;
+}
+
+/* 调试用 - 可以临时启用来检查字体 */
+/*
+.debug-font {
+  border: 1px solid red !important;
+  background: yellow !important;
+}
+
+.debug-font:before {
+  content: "Font: " attr(style) !important;
+  color: red !important;
+  font-size: 10px !important;
+}
+*/
