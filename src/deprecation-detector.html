@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>已弃用功能检测和修复工具 - 传颂平台</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #7c4dff 0%, #3f51b5 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .status-warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .status-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feature-name {
+            font-weight: 500;
+        }
+        
+        .feature-status {
+            font-size: 18px;
+        }
+        
+        .button {
+            background: #7c4dff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s;
+            margin-right: 10px;
+        }
+        
+        .button:hover {
+            background: #6d3efc;
+        }
+        
+        .button.secondary {
+            background: #666;
+        }
+        
+        .button.secondary:hover {
+            background: #555;
+        }
+        
+        .log-container {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .log-info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .log-warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .log-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .log-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7c4dff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 已弃用功能检测和修复工具</h1>
+            <p>实时监控和修复传颂平台中的已弃用功能，确保最佳性能和兼容性</p>
+        </div>
+        
+        <div class="content">
+            <!-- 总体状态 -->
+            <div class="section">
+                <div class="section-header">
+                    <span>🎯 总体状态</span>
+                    <span class="status-badge" id="overallStatus">检测中...</span>
+                </div>
+                <div class="section-content">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="supportedFeatures">0</div>
+                            <div class="stat-label">支持的特性</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalFeatures">0</div>
+                            <div class="stat-label">总特性数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="compatibilityScore">0%</div>
+                            <div class="stat-label">兼容性评分</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="fixedIssues">0</div>
+                            <div class="stat-label">已修复问题</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span>兼容性进度</span>
+                            <span id="progressText">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 浏览器兼容性 -->
+            <div class="section">
+                <div class="section-header">
+                    <span>🌐 浏览器兼容性检查</span>
+                    <span class="status-badge" id="browserStatus">检测中...</span>
+                </div>
+                <div class="section-content">
+                    <div class="feature-grid" id="browserFeatures">
+                        <!-- 动态生成 -->
+                    </div>
+                    <button class="button" onclick="runCompatibilityCheck()">🔄 重新检测</button>
+                    <button class="button secondary" onclick="applyPolyfills()">🛠️ 应用修复</button>
+                </div>
+            </div>
+            
+            <!-- jQuery 问题检测 -->
+            <div class="section">
+                <div class="section-header">
+                    <span>📚 jQuery 已弃用功能检测</span>
+                    <span class="status-badge" id="jqueryStatus">检测中...</span>
+                </div>
+                <div class="section-content">
+                    <div id="jqueryIssues">
+                        <!-- 动态生成 -->
+                    </div>
+                    <button class="button" onclick="scanDeprecatedMethods()">🔍 扫描已弃用方法</button>
+                    <button class="button secondary" onclick="fixDeprecatedMethods()">🔧 修复问题</button>
+                </div>
+            </div>
+            
+            <!-- 实时日志 -->
+            <div class="section">
+                <div class="section-header">
+                    <span>📋 实时检测日志</span>
+                    <button class="button secondary" onclick="clearLog()" style="padding: 6px 12px; font-size: 12px;">清空日志</button>
+                </div>
+                <div class="section-content">
+                    <div class="log-container" id="logContainer">
+                        <div class="log-entry log-info">等待检测开始...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 修复建议 -->
+            <div class="section">
+                <div class="section-header">
+                    <span>💡 修复建议和最佳实践</span>
+                </div>
+                <div class="section-content" id="recommendations">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 日志管理
+        class Logger {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.logs = [];
+            }
+            
+            log(message, type = 'info') {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = {
+                    message: `[${timestamp}] ${message}`,
+                    type: type,
+                    timestamp: Date.now()
+                };
+                
+                this.logs.push(logEntry);
+                this.renderLog(logEntry);
+                
+                // 保持最新的50条日志
+                if (this.logs.length > 50) {
+                    this.logs.shift();
+                    this.renderAllLogs();
+                }
+                
+                // 自动滚动到底部
+                this.container.scrollTop = this.container.scrollHeight;
+            }
+            
+            renderLog(logEntry) {
+                const div = document.createElement('div');
+                div.className = `log-entry log-${logEntry.type}`;
+                div.textContent = logEntry.message;
+                this.container.appendChild(div);
+            }
+            
+            renderAllLogs() {
+                this.container.innerHTML = '';
+                this.logs.forEach(log => this.renderLog(log));
+            }
+            
+            clear() {
+                this.logs = [];
+                this.container.innerHTML = '<div class="log-entry log-info">日志已清空</div>';
+            }
+        }
+        
+        // 全局状态管理
+        class DeprecationDetector {
+            constructor() {
+                this.logger = new Logger('logContainer');
+                this.stats = {
+                    supportedFeatures: 0,
+                    totalFeatures: 0,
+                    fixedIssues: 0,
+                    compatibilityScore: 0
+                };
+                this.deprecatedMethods = [];
+                this.browserFeatures = {};
+            }
+            
+            init() {
+                this.logger.log('开始初始化已弃用功能检测器', 'info');
+                this.checkBrowserCompatibility();
+                this.scanDeprecatedMethods();
+                this.generateRecommendations();
+                this.startRealTimeMonitoring();
+            }
+            
+            checkBrowserCompatibility() {
+                this.logger.log('开始检查浏览器兼容性...', 'info');
+                
+                const features = {
+                    'Fetch API': typeof window.fetch === 'function',
+                    'Promise': typeof Promise === 'function',
+                    'classList': !!Element.prototype.classList,
+                    'addEventListener': typeof Element.prototype.addEventListener === 'function',
+                    'requestAnimationFrame': typeof window.requestAnimationFrame === 'function',
+                    'IntersectionObserver': typeof window.IntersectionObserver === 'function',
+                    'AbortController': typeof window.AbortController === 'function',
+                    'Web Animation API': typeof Element.prototype.animate === 'function',
+                    'Service Worker': 'serviceWorker' in navigator,
+                    'WebP Support': this.checkWebPSupport(),
+                    'ES6 Modules': this.checkES6Support(),
+                    'CSS Grid': this.checkCSSGridSupport()
+                };
+                
+                this.browserFeatures = features;
+                this.stats.totalFeatures = Object.keys(features).length;
+                this.stats.supportedFeatures = Object.values(features).filter(Boolean).length;
+                this.stats.compatibilityScore = Math.round((this.stats.supportedFeatures / this.stats.totalFeatures) * 100);
+                
+                this.renderBrowserFeatures();
+                this.updateStats();
+                
+                this.logger.log(`浏览器兼容性检查完成，支持 ${this.stats.supportedFeatures}/${this.stats.totalFeatures} 项特性`, 'success');
+            }
+            
+            checkWebPSupport() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1;
+                canvas.height = 1;
+                return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+            }
+            
+            checkES6Support() {
+                try {
+                    eval('class Test {}; const test = () => {}; let [a, b] = [1, 2];');
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            checkCSSGridSupport() {
+                return CSS.supports('display', 'grid');
+            }
+            
+            scanDeprecatedMethods() {
+                this.logger.log('开始扫描已弃用的 jQuery 方法...', 'info');
+                
+                const deprecatedMethods = [
+                    { method: '$.browser', reason: '已在 jQuery 1.9 中移除', severity: 'error' },
+                    { method: '$.fn.live()', reason: '已在 jQuery 1.9 中移除，使用 .on() 替代', severity: 'error' },
+                    { method: '$.fn.die()', reason: '已在 jQuery 1.9 中移除，使用 .off() 替代', severity: 'error' },
+                    { method: '$.fn.load() [事件]', reason: '已弃用，使用 .on("load") 替代', severity: 'warning' },
+                    { method: '$.fn.unload()', reason: '已弃用，使用 beforeunload 或 pagehide 事件', severity: 'warning' },
+                    { method: '$.fn.error()', reason: '已弃用，使用 .on("error") 替代', severity: 'warning' },
+                    { method: '$.fn.toggle() [事件]', reason: '已在 jQuery 1.9 中移除', severity: 'error' },
+                    { method: '$.fn.bind()', reason: '已弃用，使用 .on() 替代', severity: 'warning' },
+                    { method: '$.fn.unbind()', reason: '已弃用，使用 .off() 替代', severity: 'warning' },
+                    { method: '$.fn.delegate()', reason: '已弃用，使用 .on() 替代', severity: 'warning' },
+                    { method: '$.fn.undelegate()', reason: '已弃用，使用 .off() 替代', severity: 'warning' }
+                ];
+                
+                let foundIssues = 0;
+                let issuesHtml = '';
+                
+                if (window.jQuery || window.$) {
+                    const $ = window.jQuery || window.$;
+                    
+                    deprecatedMethods.forEach(item => {
+                        const exists = this.checkMethodExists(item.method);
+                        if (exists) {
+                            foundIssues++;
+                            issuesHtml += `
+                                <div class="feature-item">
+                                    <div>
+                                        <div class="feature-name">${item.method}</div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 4px;">${item.reason}</div>
+                                    </div>
+                                    <div class="status-badge status-${item.severity}">
+                                        ${item.severity === 'error' ? '❌' : '⚠️'}
+                                    </div>
+                                </div>
+                            `;
+                            this.logger.log(`发现已弃用方法: ${item.method}`, item.severity);
+                        }
+                    });
+                    
+                    if (foundIssues === 0) {
+                        issuesHtml = '<div class="feature-item"><div class="feature-name">✅ 未发现已弃用的 jQuery 方法</div></div>';
+                        this.logger.log('jQuery 方法检查完成，未发现问题', 'success');
+                    } else {
+                        this.logger.log(`发现 ${foundIssues} 个已弃用的 jQuery 方法`, 'warning');
+                    }
+                } else {
+                    issuesHtml = '<div class="feature-item"><div class="feature-name">ℹ️ 未检测到 jQuery 库</div></div>';
+                    this.logger.log('未检测到 jQuery 库', 'info');
+                }
+                
+                document.getElementById('jqueryIssues').innerHTML = issuesHtml;
+                this.updateJQueryStatus(foundIssues);
+            }
+            
+            checkMethodExists(methodPath) {
+                try {
+                    const $ = window.jQuery || window.$;
+                    if (!$) return false;
+                    
+                    if (methodPath.includes('$.browser')) {
+                        return !!$.browser;
+                    } else if (methodPath.includes('$.fn.')) {
+                        const method = methodPath.replace('$.fn.', '').split('(')[0];
+                        return typeof $.fn[method] === 'function';
+                    }
+                    return false;
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            renderBrowserFeatures() {
+                const container = document.getElementById('browserFeatures');
+                let html = '';
+                
+                Object.entries(this.browserFeatures).forEach(([feature, supported]) => {
+                    html += `
+                        <div class="feature-item">
+                            <div class="feature-name">${feature}</div>
+                            <div class="feature-status">${supported ? '✅' : '❌'}</div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+            }
+            
+            updateStats() {
+                document.getElementById('supportedFeatures').textContent = this.stats.supportedFeatures;
+                document.getElementById('totalFeatures').textContent = this.stats.totalFeatures;
+                document.getElementById('compatibilityScore').textContent = this.stats.compatibilityScore + '%';
+                document.getElementById('fixedIssues').textContent = this.stats.fixedIssues;
+                
+                document.getElementById('progressFill').style.width = this.stats.compatibilityScore + '%';
+                document.getElementById('progressText').textContent = this.stats.compatibilityScore + '%';
+                
+                // 更新总体状态
+                const overallStatus = document.getElementById('overallStatus');
+                if (this.stats.compatibilityScore >= 90) {
+                    overallStatus.textContent = '优秀';
+                    overallStatus.className = 'status-badge status-success';
+                } else if (this.stats.compatibilityScore >= 70) {
+                    overallStatus.textContent = '良好';
+                    overallStatus.className = 'status-badge status-warning';
+                } else {
+                    overallStatus.textContent = '需要改进';
+                    overallStatus.className = 'status-badge status-error';
+                }
+                
+                // 更新浏览器状态
+                const browserStatus = document.getElementById('browserStatus');
+                if (this.stats.compatibilityScore >= 80) {
+                    browserStatus.textContent = '兼容性良好';
+                    browserStatus.className = 'status-badge status-success';
+                } else {
+                    browserStatus.textContent = '需要 Polyfill';
+                    browserStatus.className = 'status-badge status-warning';
+                }
+            }
+            
+            updateJQueryStatus(issues) {
+                const jqueryStatus = document.getElementById('jqueryStatus');
+                if (issues === 0) {
+                    jqueryStatus.textContent = '无问题';
+                    jqueryStatus.className = 'status-badge status-success';
+                } else {
+                    jqueryStatus.textContent = `${issues} 个问题`;
+                    jqueryStatus.className = 'status-badge status-warning';
+                }
+            }
+            
+            generateRecommendations() {
+                const recommendations = document.getElementById('recommendations');
+                let html = '<div class="feature-grid">';
+                
+                const tips = [
+                    {
+                        title: '🚀 升级到现代 JavaScript',
+                        content: '使用原生 JavaScript API 替代 jQuery，提升性能并减少依赖。'
+                    },
+                    {
+                        title: '📦 使用现代模块系统',
+                        content: '采用 ES6 模块或现代打包工具来管理依赖关系。'
+                    },
+                    {
+                        title: '🎯 事件监听器最佳实践',
+                        content: '使用 addEventListener 和 passive 选项来提升滚动性能。'
+                    },
+                    {
+                        title: '⚡ 异步加载优化',
+                        content: '使用动态导入和懒加载技术来改善页面加载速度。'
+                    },
+                    {
+                        title: '🛡️ 错误处理策略',
+                        content: '实施完善的错误边界和降级策略来提升用户体验。'
+                    },
+                    {
+                        title: '📊 性能监控',
+                        content: '使用 Performance API 来监控和优化应用性能。'
+                    }
+                ];
+                
+                tips.forEach(tip => {
+                    html += `
+                        <div class="feature-item" style="flex-direction: column; align-items: flex-start;">
+                            <div class="feature-name" style="margin-bottom: 8px;">${tip.title}</div>
+                            <div style="font-size: 14px; color: #666; line-height: 1.4;">${tip.content}</div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                recommendations.innerHTML = html;
+            }
+            
+            startRealTimeMonitoring() {
+                this.logger.log('开始实时监控...', 'info');
+                
+                // 监控控制台错误
+                const originalError = console.error;
+                console.error = (...args) => {
+                    const message = args.join(' ');
+                    if (message.includes('deprecated') || message.includes('弃用')) {
+                        this.logger.log(`检测到弃用警告: ${message}`, 'warning');
+                    }
+                    originalError.apply(console, args);
+                };
+                
+                // 监控未处理的 Promise 拒绝
+                window.addEventListener('unhandledrejection', (event) => {
+                    this.logger.log(`未处理的 Promise 拒绝: ${event.reason}`, 'error');
+                });
+                
+                // 定期检查
+                setInterval(() => {
+                    this.checkBrowserCompatibility();
+                }, 30000); // 每30秒检查一次
+            }
+        }
+        
+        // 全局实例
+        const detector = new DeprecationDetector();
+        
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => detector.init());
+        } else {
+            detector.init();
+        }
+        
+        // 全局函数
+        function runCompatibilityCheck() {
+            detector.logger.log('手动触发兼容性检查', 'info');
+            detector.checkBrowserCompatibility();
+        }
+        
+        function applyPolyfills() {
+            detector.logger.log('开始应用 Polyfills...', 'info');
+            if (window.CompatibilityFixer) {
+                CompatibilityFixer.addPolyfills();
+                detector.stats.fixedIssues++;
+                detector.updateStats();
+                detector.logger.log('Polyfills 应用成功', 'success');
+            } else {
+                detector.logger.log('CompatibilityFixer 未找到', 'error');
+            }
+        }
+        
+        function scanDeprecatedMethods() {
+            detector.scanDeprecatedMethods();
+        }
+        
+        function fixDeprecatedMethods() {
+            detector.logger.log('开始修复已弃用方法...', 'info');
+            if (window.CompatibilityFixer) {
+                CompatibilityFixer.fixDeprecatedMethods();
+                detector.stats.fixedIssues++;
+                detector.updateStats();
+                detector.logger.log('已弃用方法修复完成', 'success');
+            } else {
+                detector.logger.log('CompatibilityFixer 未找到', 'error');
+            }
+        }
+        
+        function clearLog() {
+            detector.logger.clear();
+        }
+    </script>
+</body>
+</html>
