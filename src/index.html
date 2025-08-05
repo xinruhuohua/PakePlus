@@ -1,32 +1,391 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="styles.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus App</title>
-        <script type="module" src="/main.js" defer></script>
-    </head>
-
-    <body>
-        <main class="container">
-            <h1>Welcome to PakePlus</h1>
-            <form class="row" id="greet-form">
-                <input id="inputValue" placeholder="Enter a something..." />
-            </form>
-            <div class="resultBox">
-                <span>result: </span>
-                <span id="result"></span>
+<html class="wide wow-animation" lang="zh-CN">
+  <head>
+    <title>首页 - 传颂 传递工艺，赞颂匠心</title>
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="css/local-fonts.css" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="js/core.min.js" as="script">
+    <link rel="preload" href="images/bg-image-1-1920x800.jpg" as="image" media="(min-width: 768px)">
+    
+    <!-- 图标和manifest -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- 本地字体优化 - 大幅提升加载速度 -->
+    <link rel="stylesheet" href="css/local-fonts.css">
+    
+    <!-- EXE环境字体修复 - 确保打包后正确显示中文 -->
+    <link rel="stylesheet" href="css/exe-fonts.css">
+    
+    <!-- CSS资源 -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- 性能优化meta标签 -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- PWA相关 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="preloader-body">
+        <div class="cssload-spinner"><span class="cssload-cube cssload-cube0"></span><span class="cssload-cube cssload-cube1"></span><span class="cssload-cube cssload-cube2"></span><span class="cssload-cube cssload-cube3"></span><span class="cssload-cube cssload-cube4"></span><span class="cssload-cube cssload-cube5"></span><span class="cssload-cube cssload-cube6"></span><span class="cssload-cube cssload-cube7"></span><span class="cssload-cube cssload-cube8"></span><span class="cssload-cube cssload-cube9"></span><span class="cssload-cube cssload-cube10"></span><span class="cssload-cube cssload-cube11"></span><span class="cssload-cube cssload-cube12"></span><span class="cssload-cube cssload-cube13"></span><span class="cssload-cube cssload-cube14"></span><span class="cssload-cube cssload-cube15"></span>
+        </div>
+        <h2 class="preloader-title">传颂</h2>
+      </div>
+    </div>
+    <div class="page">
+      <!-- Page Header-->
+      <header class="page-header">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+          <nav class="rd-navbar" data-layout="rd-navbar-sidebar" data-device-layout="rd-navbar-sidebar" data-sm-layout="rd-navbar-sidebar" data-sm-device-layout="rd-navbar-sidebar" data-md-layout="rd-navbar-sidebar" data-md-device-layout="rd-navbar-sidebar" data-lg-layout="rd-navbar-sidebar" data-lg-device-layout="rd-navbar-sidebar" data-xl-layout="rd-navbar-sidebar" data-xl-device-layout="rd-navbar-sidebar" data-xxl-layout="rd-navbar-sidebar" data-xxl-device-layout="rd-navbar-sidebar" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true" data-body-class="rd-navbar-style-1">
+            <div class="rd-navbar-main-outer">
+              <div class="rd-navbar-main">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                  <!-- RD Navbar Toggle-->
+                  <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                  <!-- RD Navbar Brand-->
+                  <div class="rd-navbar-brand">
+                    <a class="brand" href="index.html">
+                      <div style="text-align: center;">
+                        <span style="font-size: 24px; font-weight: bold; color: #151515; font-family: 'Questrial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: block;">Chuan Sun</span>
+                        <div style="margin-top: 8px;">
+                          <span style="font-size: 20px; font-weight: bold; color: #151515; font-family: 'Questrial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: inline-block;">传颂</span>
+                        </div>
+                        <div style="margin-top: 4px;">
+                          <span style="font-size: 12px; font-weight: normal; color: #151515; font-family: 'Questrial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: inline-block; text-transform: uppercase; letter-spacing: 0.3em;">传递工艺，赞颂匠心</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="rd-navbar-nav-wrap">
+                  <div class="rd-navbar-nav-container">
+                    <!-- RD Navbar Nav-->
+                    <ul class="rd-navbar-nav">
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="index.html">首页</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="about.html">非遗历史</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="single-project.html">非遗展示</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="blog-post.html">产品展示</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="privacy-policy.html">隐私政策</a>
+                      </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="contacts.html">联系我们</a>
+                      </li>
+                    </ul>
+                    <ul class="contacts-classic">
+                      <li>
+                        <div class="contacts-classic-title">电话:</div><a href="tel:#">+1 (409) 987–5874</a>
+                      </li>
+                      <li>
+                        <div class="contacts-classic-title">邮箱:</div><a href="mailTo:#">info@demolink.org</a>
+                      </li>
+                      <li>
+                        <div class="contacts-classic-title">关注我们:</div>
+                        <ul class="list-inline list-social list-inline-sm">
+                          <li><a class="icon fa fa-linkedin" href="#"></a></li>
+                          <li><a class="icon fa fa-twitter" href="#"></a></li>
+                          <li><a class="icon fa fa-facebook" href="#"></a></li>
+                          <li><a class="icon fa fa-instagram" href="#"></a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="invokeBox">
-                <button id="openUrl">open_url_browser</button>
-                <button id="openUrlNew">open_url_new</button>
-                <button id="runCommand">run_command</button>
-                <button id="downloadFile">download_file</button>
-                <button id="getExeDir">get_exe_dir</button>
-                <button id="getEnvVar">get_env_var</button>
-                <button id="findPort">find_port</button>
+            <ul class="nav-custom rd-navbar-nav">
+              <li class="active"><a class="nav-custom-counter" href="#home"></a></li>
+              <li><a class="nav-custom-counter" href="#about"></a></li>
+              <li><a class="nav-custom-counter" href="#works"></a></li>
+              <li><a class="nav-custom-counter" href="#team"></a></li>
+              <li><a class="nav-custom-counter" href="#clients"></a></li>
+              <li><a class="nav-custom-counter" href="#projects"></a></li>
+              <li><a class="nav-custom-counter" href="#contacts"></a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <!-- DePaletra-->
+      <section class="section section-full section-inset-1 bg-default text-center bg-image background-position-1" id="home" style="background-image: url(https://vodpub6.v.news.cn/yqfbzx-original/20240130/image/56531ce6-20d4-4383-a103-46fef2fa815c.jpg); background-size: contain; background-repeat: no-repeat; background-position: center top; position: relative;">
+        <div class="container">
+          <div class="title-style-1-wrap">
+            <div class="oh-desktop wow slideInLeft">
+          </div>
+        </div>
+        <a class="button button-default wow fadeInUp" href="about.html" style="position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 10;">了解更多</a>
+      </section>
+      <!-- About Us-->
+      <section class="section section-full section-xxl bg-default" id="about">
+        <div class="container">
+          <div class="row row-30 justify-content-center">
+            <div class="col-sm-9 col-md-5 cube-classic-wrap">
+              <div class="subtitle-classic wow fadeInLeft">欢迎访问我们的网站！</div>
+              <h2 class="wow fadeInLeft">非遗的匠心 <br class="d-none d-md-block"><span class="text-primary">传承</span>着历史的 <br class="d-none d-md-block">辉煌
+              </h2>
+              <div class="cube-classic cube-classic-1"><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span>
+              </div>
             </div>
-        </main>
-    </body>
+            <div class="col-md-7 col-lg-6 col-xl-5">
+              <p class="wow fadeInRight">那指尖翻飞如梭，银针牵动彩线，在经纬间穿梭千年情思；刻刀沉稳游走，在木石之上雕琢时光的印记；炉火映红专注的脸庞，泥土在巧手中淬炼出温润的光华。非遗匠人，以心为炉，以手为笔，默默守护着祖辈相传的智慧与精魂。</p>
+              <p class="wow fadeInRight">他们手中的每一件器物、每一缕丝线、每一道纹样，皆非冰冷的技艺复刻，而是鲜活的历史语言在当代的深情述说——匠心不息，正让那沉淀千年的辉煌，在烟火人间中绵延不息。</p><a class="wow fadeInRight button button-default" href="about.html">了解更多</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Selected works-->
+      <section class="section section-full section-md bg-gray-100 section-background-custom" id="works">
+        <div class="container">
+          <div class="row row-30 justify-content-center justify-content-lg-end align-items-md-center">
+            <div class="col-sm-8 col-md-6 col-lg-5 cube-classic-wrap">
+              <div class="subtitle-classic wow fadeInLeft">精选作品</div>
+              <h2 class="wow fadeInLeft" data-wow-delay=".1s">参观非遗 <br class="d-none d-md-block">最新完成的 <br class="d-none d-md-block">作品
+              </h2>
+              <p class="wow fadeInLeft">蓝染布匹在时光中浸染出深浅靛韵，雕漆器皿层叠朱红如凝固的晚霞，云锦金线于经纬间织就龙凤祥云。指尖摩挲处，皆是岁月凝练的温润光华。</p>
+              <div class="cube-classic cube-classic-2"><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span><span class="cube-classic-item"></span>
+              </div>
+            </div>
+            <div class="col-sm-8 col-md-6 wow blurIn">
+              <div class="inset-xl-left-25">
+                <!-- Owl Carousel-->
+                <div class="owl-carousel owl-style-1" data-loop="true" data-items="1" data-nav="true">
+                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff4067a0b79.jpg" alt="DePaletra 精选作品展示 1" width="618" height="614" loading="lazy"/>
+                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fbf25a75.jpg" alt="DePaletra 精选作品展示 2" width="618" height="614" loading="lazy"/>
+                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fead1fbd.jpg" alt="DePaletra 精选作品展示 3" width="618" height="614" loading="lazy"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="background-custom-1 bg-default"></div>
+      </section>
+      <!-- Our Team-->
+      <section class="section section-full section-sm bg-default text-md-center" id="team">
+        <div class="container">
+          <div class="subtitle-classic wow fadeInUp">认识非遗的传承人</div>
+          <h2><span class="d-inline-block wow fadeInLeft">历史长河中的</span> <span class="text-primary d-inline-block wow fadeInRight">守望者</span>
+          </h2>
+          <div class="row row-lg row-30 justify-content-center">
+            <div class="col-sm-6 col-md-4">
+              <article class="team-classic box-md"><img src="https://bkimg.cdn.bcebos.com/pic/5d6034a85edf8db1cb1332d1037aca54564e9258de77?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080" alt="李保安 - 龙舟制作技艺非遗传承人" width="370" height="502" loading="lazy"/>
+                <div class="team-classic-caption">
+                  <div>
+                    <h4 class="team-classic-name"><a href="#">李保安</a></h4>
+                    <div class="team-classic-status">龙舟制作技艺非遗传承人</div>
+                    <ul class="list-inline team-classic-list-social list-inline-sm">
+                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <article class="team-classic box-md"><img src="images/team-2-370x502.jpg" alt="埃里克·史密斯 - 首席执行官，创始人" width="370" height="502" loading="lazy"/>
+                <div class="team-classic-caption">
+                  <div>
+                    <h4 class="team-classic-name"><a href="#">埃里克·史密斯</a></h4>
+                    <div class="team-classic-status">首席执行官，创始人</div>
+                    <ul class="list-inline team-classic-list-social list-inline-sm">
+                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <article class="team-classic box-md"><img src="images/team-3-370x502.jpg" alt="泰德·约翰逊 - 网页开发者" width="370" height="502" loading="lazy"/>
+                <div class="team-classic-caption">
+                  <div>
+                    <h4 class="team-classic-name"><a href="#">泰德·约翰逊</a></h4>
+                    <div class="team-classic-status">网页开发者</div>
+                    <ul class="list-inline team-classic-list-social list-inline-sm">
+                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Clients-->
+      <section class="section section-full section-xl bg-gray-100 text-md-center" id="clients">
+        <div class="container">
+          <div class="subtitle-classic wow fadeInUp">非遗项目的技艺展示</div>
+          <h2><span class="d-inline-block wow fadeInLeft">纯粹的</span> <span class="d-inline-block wow fadeInRight">匠心</span>
+          </h2>
+          <div class="row row-xxl bordered-classic">
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInLeft" href="#"><img src="images/clients-1-160x110.png" alt="合作客户 1" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInDown" href="#" data-wow-delay=".1s"><img src="images/clients-2-160x110.png" alt="合作客户 2" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInDown" href="#" data-wow-delay=".2s"><img src="images/clients-3-160x110.png" alt="合作客户 3" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInRight" href="#" data-wow-delay=".3s"><img src="images/clients-4-160x110.png" alt="合作客户 4" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInLeft" href="#" data-wow-delay=".3s"><img src="images/clients-5-160x110.png" alt="合作客户 5" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInUp" href="#" data-wow-delay=".2s"><img src="images/clients-6-160x110.png" alt="合作客户 6" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInUp" href="#" data-wow-delay=".1s"><img src="images/clients-7-160x110.png" alt="合作客户 7" width="160" height="110" loading="lazy"/></a></div>
+            <div class="col-6 col-sm-4 col-md-3"><a class="clients-classic wow slideInRight" href="#"><img src="images/clients-8-160x110.png" alt="合作客户 8" width="160" height="110" loading="lazy"/></a></div>
+          </div>
+        </div>
+      </section>
+      <!-- Portfolio-->
+      <section class="section section-full section-xs section-first bg-default text-md-center" id="projects">
+        <div class="container">
+          <div class="subtitle-classic wow fadeInUp">衍生设计作品</div>
+          <h2><span class="d-inline-block wow fadeInLeft">我们的产品</span> <span class="text-primary d-inline-block wow fadeInRight">设计</span>
+          </h2>
+          <div class="row row-lg row-30">
+            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".2s">
+              <article class="project-classic box-md"><img src="images/project-1-370x262.jpg" alt="设计作品01. 我们的设计" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品01.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".1s">
+              <article class="project-classic box-md"><img src="images/project-2-370x262.jpg" alt="设计作品02. 我们的设计" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品02.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4 wow blurIn">
+              <article class="project-classic box-md"><img src="images/project-3-370x262.jpg" alt="设计作品03. 我们的设计" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品03.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4 wow blurIn">
+              <article class="project-classic box-md"><img src="images/project-4-370x262.jpg" alt="设计作品04. 我们的设计" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品04.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".1s">
+              <article class="project-classic box-md"><img src="images/project-5-370x262.jpg" alt="设计作品05. 我们的设计" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品05.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-4 wow blurIn" data-wow-delay=".2s">
+              <article class="project-classic box-md"><img src="images/project-6-370x262.jpg" alt="设计作品06. 品牌设计项目" width="370" height="262" loading="lazy"/>
+                <div class="project-classic-caption">
+                  <div>
+                    <h4 class="project-classic-title"><a href="single-project.html">设计作品06.</a></h4>
+                    <div class="project-classic-tag">我们的设计</div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Page Footer-->
+      <footer class="section footer-classic section-full section-full-1 section-sm section-inset-2 bg-gray-3 context-dark text-md-center" id="contacts">
+        <div class="container">
+          <div class="subtitle-classic wow fadeInUp">保护非遗传承</div>
+          <h2><span class="d-inline-block wow fadeInLeft">欢迎加入</span> <span class="d-inline-block wow fadeInRight">我们</span>
+          </h2>
+          <!-- RD Mailform-->
+          <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+            <div class="form-wrap wow fadeInRight">
+              <label class="form-label" for="contact-name">姓名</label>
+              <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
+            </div>
+            <div class="form-wrap wow fadeInRight">
+              <label class="form-label" for="contact-email">邮箱</label>
+              <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Required @Email">
+            </div>
+            <div class="form-wrap wow fadeInRight">
+              <label class="form-label" for="contact-message">信息</label>
+              <textarea class="form-input" id="contact-message" name="message" data-constraints="@Required"></textarea>
+            </div>
+            <div class="form-button text-center">
+              <button class="button button-default wow fadeInUp" type="submit">发送消息</button>
+            </div>
+          </form>
+        </div>
+        <div class="container">
+          <div class="footer-classic-list-social wow fadeInUp">
+            <ul class="list-inline list-social list-inline-sm">
+              <li><a class="icon fa fa-linkedin" href="#"></a></li>
+              <li><a class="icon fa fa-twitter" href="#"></a></li>
+              <li><a class="icon fa fa-facebook" href="#"></a></li>
+              <li><a class="icon fa fa-instagram" href="#"></a></li>
+            </ul>
+          </div>
+          <p class="rights wow fadeInUp"><span>&copy;&nbsp; </span><span class="copyright-year"></span><span>&nbsp;</span><span>DePaletra</span><span>.&nbsp;</span><span>版权所有。条款与条件</span><br/><a href="privacy-policy.html">隐私政策</a> <a target="_blank" href="https://www.mobanwang.com/" title="网站模板">网站模板</a></p>
+        </div>
+      </footer>
+    </div>
+    <div class="snackbars" id="form-output-global"></div>
+    
+    <!-- 优化JavaScript加载 -->
+    <script src="js/exe-font-fixer.js"></script>
+    <script src="js/font-loader.js" async></script>
+    <script src="js/core.min.js" defer></script>
+    <script src="js/script.js" defer></script>
+    
+    <!-- 性能监控脚本（开发环境使用） -->
+    <script src="js/performance-monitor.js" defer></script>
+    
+    <!-- Service Worker for caching (可选) -->
+    <script>
+      // 检查浏览器是否支持 Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          // 可以在此处注册 Service Worker 进行缓存优化
+          // navigator.serviceWorker.register('/sw.js');
+        });
+      }
+      
+      // 字体加载优化 - 检测字体是否已加载
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+          document.documentElement.classList.add('fonts-loaded');
+        });
+      } else {
+        // 较老浏览器的字体加载检测
+        setTimeout(function() {
+          document.documentElement.classList.add('fonts-loaded');
+        }, 100);
+      }
+    </script>
+  </body>
 </html>
