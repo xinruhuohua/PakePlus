@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页性能测试工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .test-section h2 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        .test-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .results-area {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .status-good { color: #28a745; }
+        .status-warning { color: #ffc107; }
+        .status-error { color: #dc3545; }
+        
+        .lighthouse-score {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .score-90 { background: #0cce6b; }
+        .score-70 { background: #ffa500; }
+        .score-50 { background: #ff5722; }
+        
+        .url-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .improvement {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .degradation {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 网页性能测试工具</h1>
+        
+        <!-- 基本性能指标 -->
+        <div class="test-section">
+            <h2>📊 基本性能指标</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="load-time">--</div>
+                    <div class="metric-label">页面加载时间 (秒)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="dom-ready">--</div>
+                    <div class="metric-label">DOM准备时间 (毫秒)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="first-paint">--</div>
+                    <div class="metric-label">首次渲染 (毫秒)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="largest-paint">--</div>
+                    <div class="metric-label">最大内容渲染 (毫秒)</div>
+                </div>
+            </div>
+            <button class="test-button" onclick="measureBasicMetrics()">测量基本指标</button>
+        </div>
+        
+        <!-- 网络性能测试 -->
+        <div class="test-section">
+            <h2>🌐 网络性能测试</h2>
+            <input type="url" class="url-input" id="test-url" placeholder="输入要测试的网页URL (默认测试当前页面)" />
+            <div class="progress-bar">
+                <div class="progress-fill" id="network-progress"></div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="network-latency">--</div>
+                    <div class="metric-label">网络延迟 (毫秒)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="download-speed">--</div>
+                    <div class="metric-label">下载速度 (KB/s)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="resource-count">--</div>
+                    <div class="metric-label">资源数量</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="total-size">--</div>
+                    <div class="metric-label">总大小 (KB)</div>
+                </div>
+            </div>
+            <button class="test-button" onclick="testNetworkPerformance()">开始网络测试</button>
+        </div>
+        
+        <!-- Lighthouse风格评分 -->
+        <div class="test-section">
+            <h2>💡 性能评分</h2>
+            <div class="lighthouse-score">
+                <div>
+                    <div class="score-circle score-90" id="performance-score">--</div>
+                    <div style="text-align: center; margin-top: 10px;">性能</div>
+                </div>
+                <div>
+                    <div class="score-circle score-70" id="accessibility-score">--</div>
+                    <div style="text-align: center; margin-top: 10px;">可访问性</div>
+                </div>
+                <div>
+                    <div class="score-circle score-90" id="best-practices-score">--</div>
+                    <div style="text-align: center; margin-top: 10px;">最佳实践</div>
+                </div>
+                <div>
+                    <div class="score-circle score-90" id="seo-score">--</div>
+                    <div style="text-align: center; margin-top: 10px;">SEO</div>
+                </div>
+            </div>
+            <button class="test-button" onclick="calculateScores()">计算评分</button>
+        </div>
+        
+        <!-- 优化建议 -->
+        <div class="test-section">
+            <h2>🔧 优化建议</h2>
+            <div class="results-area" id="optimization-suggestions">
+                点击"生成优化建议"按钮来获取针对性的优化建议...
+            </div>
+            <button class="test-button" onclick="generateOptimizationSuggestions()">生成优化建议</button>
+        </div>
+        
+        <!-- 比较报告 -->
+        <div class="test-section">
+            <h2>📈 性能比较</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>指标</th>
+                        <th>优化前</th>
+                        <th>优化后</th>
+                        <th>改进</th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-body">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #6c757d;">
+                            运行测试后将显示比较数据
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 详细报告 -->
+        <div class="test-section">
+            <h2>📋 详细报告</h2>
+            <div class="results-area" id="detailed-report">
+                测试结果将在这里显示...
+            </div>
+            <button class="test-button" onclick="generateDetailedReport()">生成详细报告</button>
+            <button class="test-button" onclick="exportReport()">导出报告</button>
+        </div>
+    </div>
+
+    <script>
+        class PerformanceTester {
+            constructor() {
+                this.testResults = {
+                    basic: {},
+                    network: {},
+                    scores: {},
+                    history: []
+                };
+                this.isTestingNetwork = false;
+            }
+
+            // 测量基本性能指标
+            async measureBasicMetrics() {
+                console.log('🔍 开始测量基本性能指标...');
+                
+                try {
+                    // 页面加载时间
+                    const loadTime = (performance.timing.loadEventEnd - performance.timing.navigationStart) / 1000;
+                    document.getElementById('load-time').textContent = loadTime.toFixed(2);
+                    
+                    // DOM准备时间
+                    const domReady = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
+                    document.getElementById('dom-ready').textContent = domReady.toFixed(0);
+                    
+                    // 获取Paint Timing
+                    const paintEntries = performance.getEntriesByType('paint');
+                    const firstPaint = paintEntries.find(entry => entry.name === 'first-paint');
+                    const firstContentfulPaint = paintEntries.find(entry => entry.name === 'first-contentful-paint');
+                    
+                    if (firstPaint) {
+                        document.getElementById('first-paint').textContent = firstPaint.startTime.toFixed(0);
+                    }
+                    
+                    // 获取Largest Contentful Paint
+                    if (window.PerformanceObserver) {
+                        this.observeLCP();
+                    }
+                    
+                    this.testResults.basic = {
+                        loadTime: loadTime,
+                        domReady: domReady,
+                        firstPaint: firstPaint?.startTime || 0,
+                        timestamp: new Date()
+                    };
+                    
+                    this.appendToReport('✅ 基本性能指标测量完成');
+                    
+                } catch (error) {
+                    console.error('测量基本指标时出错:', error);
+                    this.appendToReport('❌ 基本指标测量失败: ' + error.message);
+                }
+            }
+
+            // 观察最大内容渲染
+            observeLCP() {
+                if (!window.PerformanceObserver) return;
+                
+                try {
+                    const po = new PerformanceObserver((entryList) => {
+                        const entries = entryList.getEntries();
+                        const lastEntry = entries[entries.length - 1];
+                        if (lastEntry) {
+                            document.getElementById('largest-paint').textContent = lastEntry.startTime.toFixed(0);
+                        }
+                    });
+                    
+                    po.observe({entryTypes: ['largest-contentful-paint']});
+                } catch (error) {
+                    console.warn('LCP观察失败:', error);
+                }
+            }
+
+            // 测试网络性能
+            async testNetworkPerformance() {
+                if (this.isTestingNetwork) return;
+                
+                this.isTestingNetwork = true;
+                const button = event.target;
+                button.disabled = true;
+                button.textContent = '测试中...';
+                
+                try {
+                    console.log('🌐 开始网络性能测试...');
+                    
+                    // 重置进度条
+                    this.updateProgress(0);
+                    
+                    // 测试网络延迟
+                    await this.measureNetworkLatency();
+                    this.updateProgress(25);
+                    
+                    // 测试下载速度
+                    await this.measureDownloadSpeed();
+                    this.updateProgress(50);
+                    
+                    // 分析资源
+                    this.analyzeResources();
+                    this.updateProgress(75);
+                    
+                    // 测试DNS解析
+                    await this.testDNSResolution();
+                    this.updateProgress(100);
+                    
+                    this.appendToReport('✅ 网络性能测试完成');
+                    
+                } catch (error) {
+                    console.error('网络测试失败:', error);
+                    this.appendToReport('❌ 网络测试失败: ' + error.message);
+                } finally {
+                    this.isTestingNetwork = false;
+                    button.disabled = false;
+                    button.textContent = '开始网络测试';
+                }
+            }
+
+            // 测量网络延迟
+            async measureNetworkLatency() {
+                const testUrl = document.getElementById('test-url').value || window.location.href;
+                const startTime = performance.now();
+                
+                try {
+                    const response = await fetch(testUrl, {
+                        method: 'HEAD',
+                        mode: 'no-cors',
+                        cache: 'no-cache'
+                    });
+                    
+                    const endTime = performance.now();
+                    const latency = endTime - startTime;
+                    
+                    document.getElementById('network-latency').textContent = latency.toFixed(0);
+                    this.testResults.network.latency = latency;
+                    
+                } catch (error) {
+                    document.getElementById('network-latency').textContent = 'N/A';
+                    console.warn('延迟测试失败:', error);
+                }
+            }
+
+            // 测量下载速度
+            async measureDownloadSpeed() {
+                try {
+                    const testImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==';
+                    const startTime = performance.now();
+                    
+                    const response = await fetch(testImage);
+                    const blob = await response.blob();
+                    
+                    const endTime = performance.now();
+                    const duration = (endTime - startTime) / 1000; // 转换为秒
+                    const size = blob.size / 1024; // 转换为KB
+                    const speed = size / duration;
+                    
+                    document.getElementById('download-speed').textContent = speed.toFixed(2);
+                    this.testResults.network.downloadSpeed = speed;
+                    
+                } catch (error) {
+                    document.getElementById('download-speed').textContent = 'N/A';
+                    console.warn('下载速度测试失败:', error);
+                }
+            }
+
+            // 分析页面资源
+            analyzeResources() {
+                try {
+                    const resources = performance.getEntriesByType('resource');
+                    const resourceCount = resources.length;
+                    const totalSize = resources.reduce((total, resource) => {
+                        return total + (resource.transferSize || 0);
+                    }, 0) / 1024; // 转换为KB
+                    
+                    document.getElementById('resource-count').textContent = resourceCount;
+                    document.getElementById('total-size').textContent = totalSize.toFixed(2);
+                    
+                    this.testResults.network.resourceCount = resourceCount;
+                    this.testResults.network.totalSize = totalSize;
+                    
+                } catch (error) {
+                    console.warn('资源分析失败:', error);
+                }
+            }
+
+            // 测试DNS解析
+            async testDNSResolution() {
+                try {
+                    const navigation = performance.getEntriesByType('navigation')[0];
+                    if (navigation) {
+                        const dnsTime = navigation.domainLookupEnd - navigation.domainLookupStart;
+                        this.testResults.network.dnsTime = dnsTime;
+                        this.appendToReport(`DNS解析时间: ${dnsTime.toFixed(2)}ms`);
+                    }
+                } catch (error) {
+                    console.warn('DNS测试失败:', error);
+                }
+            }
+
+            // 更新进度条
+            updateProgress(percentage) {
+                const progressBar = document.getElementById('network-progress');
+                progressBar.style.width = percentage + '%';
+            }
+
+            // 计算性能评分
+            calculateScores() {
+                console.log('💡 计算性能评分...');
+                
+                try {
+                    // 基于实际指标计算评分
+                    const loadTime = this.testResults.basic.loadTime || 3;
+                    const resourceCount = this.testResults.network.resourceCount || 50;
+                    const totalSize = this.testResults.network.totalSize || 1000;
+                    
+                    // 性能评分 (基于加载时间)
+                    let performanceScore = Math.max(0, Math.min(100, 100 - (loadTime - 1) * 20));
+                    
+                    // 可访问性评分 (基于页面结构)
+                    let accessibilityScore = this.calculateAccessibilityScore();
+                    
+                    // 最佳实践评分 (基于现代Web标准)
+                    let bestPracticesScore = this.calculateBestPracticesScore();
+                    
+                    // SEO评分 (基于页面SEO元素)
+                    let seoScore = this.calculateSEOScore();
+                    
+                    // 更新界面
+                    this.updateScoreDisplay('performance-score', performanceScore);
+                    this.updateScoreDisplay('accessibility-score', accessibilityScore);
+                    this.updateScoreDisplay('best-practices-score', bestPracticesScore);
+                    this.updateScoreDisplay('seo-score', seoScore);
+                    
+                    this.testResults.scores = {
+                        performance: performanceScore,
+                        accessibility: accessibilityScore,
+                        bestPractices: bestPracticesScore,
+                        seo: seoScore
+                    };
+                    
+                    this.appendToReport('✅ 性能评分计算完成');
+                    
+                } catch (error) {
+                    console.error('评分计算失败:', error);
+                    this.appendToReport('❌ 评分计算失败: ' + error.message);
+                }
+            }
+
+            // 计算可访问性评分
+            calculateAccessibilityScore() {
+                let score = 70; // 基础分
+                
+                // 检查alt属性
+                const images = document.querySelectorAll('img');
+                const imagesWithAlt = document.querySelectorAll('img[alt]');
+                if (images.length > 0) {
+                    score += (imagesWithAlt.length / images.length) * 15;
+                }
+                
+                // 检查标题层次
+                const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                if (headings.length > 0) score += 10;
+                
+                // 检查语言属性
+                if (document.documentElement.lang) score += 5;
+                
+                return Math.min(100, Math.round(score));
+            }
+
+            // 计算最佳实践评分
+            calculateBestPracticesScore() {
+                let score = 80; // 基础分
+                
+                // 检查HTTPS
+                if (location.protocol === 'https:') score += 10;
+                
+                // 检查viewport meta标签
+                if (document.querySelector('meta[name="viewport"]')) score += 5;
+                
+                // 检查charset
+                if (document.querySelector('meta[charset]')) score += 5;
+                
+                return Math.min(100, Math.round(score));
+            }
+
+            // 计算SEO评分
+            calculateSEOScore() {
+                let score = 70; // 基础分
+                
+                // 检查title标签
+                if (document.title && document.title.length > 10) score += 10;
+                
+                // 检查meta description
+                if (document.querySelector('meta[name="description"]')) score += 10;
+                
+                // 检查h1标签
+                if (document.querySelector('h1')) score += 5;
+                
+                // 检查结构化数据
+                if (document.querySelector('script[type="application/ld+json"]')) score += 5;
+                
+                return Math.min(100, Math.round(score));
+            }
+
+            // 更新评分显示
+            updateScoreDisplay(elementId, score) {
+                const element = document.getElementById(elementId);
+                element.textContent = Math.round(score);
+                
+                // 更新颜色
+                element.className = 'score-circle';
+                if (score >= 90) {
+                    element.classList.add('score-90');
+                } else if (score >= 70) {
+                    element.classList.add('score-70');
+                } else {
+                    element.classList.add('score-50');
+                }
+            }
+
+            // 生成优化建议
+            generateOptimizationSuggestions() {
+                console.log('🔧 生成优化建议...');
+                
+                const suggestions = [];
+                const loadTime = this.testResults.basic.loadTime || 0;
+                const resourceCount = this.testResults.network.resourceCount || 0;
+                const totalSize = this.testResults.network.totalSize || 0;
+                
+                // 基于加载时间的建议
+                if (loadTime > 3) {
+                    suggestions.push('🚀 页面加载时间较慢，建议优化图片压缩和启用浏览器缓存');
+                }
+                
+                // 基于资源数量的建议
+                if (resourceCount > 100) {
+                    suggestions.push('📦 资源文件较多，建议合并CSS/JS文件或使用HTTP/2');
+                }
+                
+                // 基于文件大小的建议
+                if (totalSize > 2000) {
+                    suggestions.push('📏 页面总大小较大，建议启用Gzip压缩和延迟加载');
+                }
+                
+                // 检查具体优化项
+                if (!document.querySelector('link[rel="preload"]')) {
+                    suggestions.push('⚡ 添加关键资源预加载 (preload) 可提升性能');
+                }
+                
+                if (!document.querySelector('meta[name="viewport"]')) {
+                    suggestions.push('📱 添加viewport meta标签以优化移动端体验');
+                }
+                
+                // Web字体优化
+                const googleFonts = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+                if (googleFonts.length > 0) {
+                    suggestions.push('🔤 为Google字体添加display=swap参数以避免文字闪烁');
+                }
+                
+                // 图片优化
+                const images = document.querySelectorAll('img:not([loading="lazy"])');
+                if (images.length > 5) {
+                    suggestions.push('🖼️ 为图片添加懒加载 (loading="lazy") 以提升初始加载速度');
+                }
+                
+                // Service Worker检查
+                if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) {
+                    suggestions.push('💾 实施Service Worker缓存策略以提升重复访问性能');
+                }
+                
+                const suggestionsHTML = suggestions.length > 0 
+                    ? suggestions.map(s => `<div style="margin: 10px 0; padding: 10px; background: #e8f4fd; border-left: 3px solid #007bff; border-radius: 4px;">${s}</div>`).join('')
+                    : '<div style="color: #28a745; text-align: center; padding: 20px;">🎉 恭喜！您的网页性能表现良好，暂无重要优化建议。</div>';
+                
+                document.getElementById('optimization-suggestions').innerHTML = suggestionsHTML;
+                this.appendToReport('✅ 优化建议生成完成');
+            }
+
+            // 生成详细报告
+            generateDetailedReport() {
+                console.log('📋 生成详细报告...');
+                
+                const report = `
+=== 网页性能详细报告 ===
+生成时间: ${new Date().toLocaleString()}
+测试页面: ${window.location.href}
+
+📊 基本性能指标:
+- 页面加载时间: ${this.testResults.basic.loadTime || 'N/A'}秒
+- DOM准备时间: ${this.testResults.basic.domReady || 'N/A'}毫秒
+- 首次渲染时间: ${this.testResults.basic.firstPaint || 'N/A'}毫秒
+
+🌐 网络性能:
+- 网络延迟: ${this.testResults.network.latency || 'N/A'}毫秒
+- 下载速度: ${this.testResults.network.downloadSpeed || 'N/A'}KB/s
+- 资源文件数量: ${this.testResults.network.resourceCount || 'N/A'}个
+- 页面总大小: ${this.testResults.network.totalSize || 'N/A'}KB
+- DNS解析时间: ${this.testResults.network.dnsTime || 'N/A'}毫秒
+
+💡 性能评分:
+- 性能评分: ${this.testResults.scores.performance || 'N/A'}/100
+- 可访问性: ${this.testResults.scores.accessibility || 'N/A'}/100
+- 最佳实践: ${this.testResults.scores.bestPractices || 'N/A'}/100
+- SEO评分: ${this.testResults.scores.seo || 'N/A'}/100
+
+🔧 浏览器信息:
+- 用户代理: ${navigator.userAgent}
+- 视窗大小: ${window.innerWidth}x${window.innerHeight}
+- 连接类型: ${navigator.connection?.effectiveType || 'Unknown'}
+
+📈 性能建议:
+${document.getElementById('optimization-suggestions').textContent || '请先生成优化建议'}
+
+=== 报告结束 ===
+                `.trim();
+                
+                document.getElementById('detailed-report').textContent = report;
+                this.appendToReport('✅ 详细报告生成完成');
+            }
+
+            // 导出报告
+            exportReport() {
+                const reportContent = document.getElementById('detailed-report').textContent;
+                const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `性能测试报告_${new Date().toISOString().slice(0, 10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.appendToReport('✅ 报告已导出');
+            }
+
+            // 添加到详细报告
+            appendToReport(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                const reportArea = document.getElementById('detailed-report');
+                reportArea.textContent += `[${timestamp}] ${message}\n`;
+                reportArea.scrollTop = reportArea.scrollHeight;
+            }
+        }
+
+        // 初始化性能测试器
+        const tester = new PerformanceTester();
+
+        // 绑定全局函数
+        window.measureBasicMetrics = () => tester.measureBasicMetrics();
+        window.testNetworkPerformance = () => tester.testNetworkPerformance();
+        window.calculateScores = () => tester.calculateScores();
+        window.generateOptimizationSuggestions = () => tester.generateOptimizationSuggestions();
+        window.generateDetailedReport = () => tester.generateDetailedReport();
+        window.exportReport = () => tester.exportReport();
+
+        // 页面加载完成后自动运行基本测试
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                tester.measureBasicMetrics();
+                tester.calculateScores();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
