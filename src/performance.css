@@ -1,0 +1,163 @@
+/* 高级性能优化CSS */
+
+/* 关键渲染路径优化 */
+.page {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 图片懒加载和优化 */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* 预加载关键图片的占位符 */
+.img-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 字体显示优化 */
+@font-face {
+  font-family: 'Critical';
+  src: local('Microsoft YaHei'), local('微软雅黑');
+  font-display: swap;
+}
+
+/* 关键内容优先显示 */
+.critical-content {
+  contain: layout style paint;
+}
+
+/* 非关键内容延迟渲染 */
+.non-critical {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+/* 链接预加载优化 */
+a[data-prefetch]:hover::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 减少重绘和重排 */
+.animated-element {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* 优化动画性能 */
+.wow {
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .wow {
+    animation: none !important;
+  }
+  
+  .complex-animation {
+    display: none;
+  }
+}
+
+/* 预连接资源 */
+.preconnect-hint::before {
+  content: '';
+  display: none;
+}
+
+/* CSS 包含优化 */
+.section {
+  contain: layout style;
+}
+
+.card, .project-classic, .team-classic {
+  contain: layout style paint;
+}
+
+/* 减少布局抖动 */
+.stable-layout {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 关键资源内联 */
+.inline-critical {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+}
+
+/* 优化渲染层 */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* 减少DOM查询 */
+.cached-element {
+  pointer-events: auto;
+}
+
+/* 响应式图片优化 */
+.responsive-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 预加载关键路径 */
+.route-prefetch {
+  position: relative;
+}
+
+.route-prefetch::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Service Worker 缓存指示器 */
+.cache-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cache-indicator.show {
+  opacity: 1;
+}
