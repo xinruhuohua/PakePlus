@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="zh-CN">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>首页 - 传颂 传递工艺，赞颂匠心</title>
     
     <!-- DNS预解析 -->
@@ -9,13 +12,32 @@
     <!-- 预加载关键资源 -->
     <link rel="preload" href="css/style.css" as="style">
     <link rel="preload" href="js/core.min.js" as="script">
+    <link rel="preload" href="js/performance-optimizer.js" as="script">
+    <link rel="preload" href="js/link-validator.js" as="script">
     <link rel="preload" href="images/bg-image-1-1920x800.jpg" as="image" media="(min-width: 768px)">
+    
+    <!-- 预连接外部资源 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.ihchina.cn">
+    <link rel="preconnect" href="https://bkimg.cdn.bcebos.com">
+    
+    <!-- 预加载重要页面 -->
+    <link rel="prefetch" href="about.html">
+    <link rel="prefetch" href="single-project.html">
+    <link rel="prefetch" href="contacts.html">
     
     <!-- 图标和manifest -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     
     <!-- 字体优化 - 使用display=swap避免FOIT -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:300%7CQuestrial&display=swap">
+    
+    <!-- 本地字体回退方案 - 解决打包后字体乱码问题 -->
+    <link rel="stylesheet" href="css/local-fonts.css">
+    
+    <!-- 性能优化CSS -->
+    <link rel="stylesheet" href="css/performance.css">
     
     <!-- CSS资源 -->
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -29,6 +51,11 @@
     <!-- 资源提示 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- 关键资源提示 -->
+    <link rel="modulepreload" href="js/performance-optimizer.js">
+    <link rel="dns-prefetch" href="//www.ihchina.cn">
+    <link rel="dns-prefetch" href="//bkimg.cdn.bcebos.com">
     
     <!-- PWA相关 -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -163,9 +190,9 @@
               <div class="inset-xl-left-25">
                 <!-- Owl Carousel-->
                 <div class="owl-carousel owl-style-1" data-loop="true" data-items="1" data-nav="true">
-                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff4067a0b79.jpg" alt="DePaletra 精选作品展示 1" width="618" height="614" loading="lazy"/>
-                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fbf25a75.jpg" alt="DePaletra 精选作品展示 2" width="618" height="614" loading="lazy"/>
-                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fead1fbd.jpg" alt="DePaletra 精选作品展示 3" width="618" height="614" loading="lazy"/>
+                  <img src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff4067a0b79.jpg" alt="DePaletra 精选作品展示 1" width="618" height="614" loading="eager" fetchpriority="high"/>
+                  <img data-src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fbf25a75.jpg" alt="DePaletra 精选作品展示 2" width="618" height="614" loading="lazy" class="lazy-image"/>
+                  <img data-src="https://www.ihchina.cn/Uploads/Picture/2025/04/16/s67ff3fead1fbd.jpg" alt="DePaletra 精选作品展示 3" width="618" height="614" loading="lazy" class="lazy-image"/>
                 </div>
               </div>
             </div>
@@ -181,48 +208,48 @@
           </h2>
           <div class="row row-lg row-30 justify-content-center">
             <div class="col-sm-6 col-md-4">
-              <article class="team-classic box-md"><img src="https://bkimg.cdn.bcebos.com/pic/5d6034a85edf8db1cb1332d1037aca54564e9258de77?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080" alt="李保安 - 龙舟制作技艺非遗传承人" width="370" height="502" loading="lazy"/>
+              <article class="team-classic box-md"><img data-src="https://bkimg.cdn.bcebos.com/pic/5d6034a85edf8db1cb1332d1037aca54564e9258de77?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080" alt="李保安 - 龙舟制作技艺非遗传承人" width="370" height="502" loading="lazy" class="lazy-image"/>
                 <div class="team-classic-caption">
                   <div>
-                    <h4 class="team-classic-name"><a href="#">李保安</a></h4>
+                    <h4 class="team-classic-name"><a href="#" rel="nofollow">李保安</a></h4>
                     <div class="team-classic-status">龙舟制作技艺非遗传承人</div>
                     <ul class="list-inline team-classic-list-social list-inline-sm">
-                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
-                      <li><a class="icon fa fa-twitter" href="#"></a></li>
-                      <li><a class="icon fa fa-facebook" href="#"></a></li>
-                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                      <li><a class="icon fa fa-linkedin" href="#" rel="nofollow" aria-label="LinkedIn"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#" rel="nofollow" aria-label="Twitter"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#" rel="nofollow" aria-label="Facebook"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#" rel="nofollow" aria-label="Instagram"></a></li>
                     </ul>
                   </div>
                 </div>
               </article>
             </div>
             <div class="col-sm-6 col-md-4">
-              <article class="team-classic box-md"><img src="images/team-2-370x502.jpg" alt="埃里克·史密斯 - 首席执行官，创始人" width="370" height="502" loading="lazy"/>
+              <article class="team-classic box-md"><img data-src="images/team-2-370x502.jpg" alt="埃里克·史密斯 - 首席执行官，创始人" width="370" height="502" loading="lazy" class="lazy-image"/>
                 <div class="team-classic-caption">
                   <div>
-                    <h4 class="team-classic-name"><a href="#">埃里克·史密斯</a></h4>
+                    <h4 class="team-classic-name"><a href="#" rel="nofollow">埃里克·史密斯</a></h4>
                     <div class="team-classic-status">首席执行官，创始人</div>
                     <ul class="list-inline team-classic-list-social list-inline-sm">
-                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
-                      <li><a class="icon fa fa-twitter" href="#"></a></li>
-                      <li><a class="icon fa fa-facebook" href="#"></a></li>
-                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                      <li><a class="icon fa fa-linkedin" href="#" rel="nofollow" aria-label="LinkedIn"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#" rel="nofollow" aria-label="Twitter"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#" rel="nofollow" aria-label="Facebook"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#" rel="nofollow" aria-label="Instagram"></a></li>
                     </ul>
                   </div>
                 </div>
               </article>
             </div>
             <div class="col-sm-6 col-md-4">
-              <article class="team-classic box-md"><img src="images/team-3-370x502.jpg" alt="泰德·约翰逊 - 网页开发者" width="370" height="502" loading="lazy"/>
+              <article class="team-classic box-md"><img data-src="images/team-3-370x502.jpg" alt="泰德·约翰逊 - 网页开发者" width="370" height="502" loading="lazy" class="lazy-image"/>
                 <div class="team-classic-caption">
                   <div>
-                    <h4 class="team-classic-name"><a href="#">泰德·约翰逊</a></h4>
+                    <h4 class="team-classic-name"><a href="#" rel="nofollow">泰德·约翰逊</a></h4>
                     <div class="team-classic-status">网页开发者</div>
                     <ul class="list-inline team-classic-list-social list-inline-sm">
-                      <li><a class="icon fa fa-linkedin" href="#"></a></li>
-                      <li><a class="icon fa fa-twitter" href="#"></a></li>
-                      <li><a class="icon fa fa-facebook" href="#"></a></li>
-                      <li><a class="icon fa fa-instagram" href="#"></a></li>
+                      <li><a class="icon fa fa-linkedin" href="#" rel="nofollow" aria-label="LinkedIn"></a></li>
+                      <li><a class="icon fa fa-twitter" href="#" rel="nofollow" aria-label="Twitter"></a></li>
+                      <li><a class="icon fa fa-facebook" href="#" rel="nofollow" aria-label="Facebook"></a></li>
+                      <li><a class="icon fa fa-instagram" href="#" rel="nofollow" aria-label="Instagram"></a></li>
                     </ul>
                   </div>
                 </div>
@@ -360,11 +387,21 @@
     <div class="snackbars" id="form-output-global"></div>
     
     <!-- 优化JavaScript加载 -->
+    <!-- 关键性能优化脚本 - 立即执行 -->
+    <script src="js/performance-optimizer.js" async></script>
+    
+    <!-- 字体回退脚本 -->
+    <script src="js/font-fallback.js" defer></script>
+    
+    <!-- 核心功能脚本 -->
     <script src="js/core.min.js" defer></script>
     <script src="js/script.js" defer></script>
     
     <!-- 性能监控脚本（开发环境使用） -->
     <script src="js/performance-monitor.js" defer></script>
+    
+    <!-- 链接验证和修复脚本 -->
+    <script src="js/link-validator.js" defer></script>
     
     <!-- Service Worker for caching (可选) -->
     <script>
